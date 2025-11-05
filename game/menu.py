@@ -478,40 +478,45 @@ class MainMenu(Menu):
         """
         Make sounds and set their starting volume (based on settings.json).
         """
-        # general sounds
-        self.menu_music = pg.mixer.Sound(MENU_MUSIC)
-        self.menu_in_sound = pg.mixer.Sound(MENU_IN_SOUND)
-        self.menu_out_sound = pg.mixer.Sound(MENU_OUT_SOUND)
-        self.switch_toggle_sound = pg.mixer.Sound(SWITCH_TOGGLE_SOUND)
-        self.high_score_sound = pg.mixer.Sound(HIGH_SCORE_SOUND)
-        self.game_over_music = pg.mixer.Sound(GAME_OVER_MUSIC)
-        self.level_start_sound = pg.mixer.Sound(LEVEL_START_SOUND)
+        try:
+            # general sounds
+            self.menu_music = pg.mixer.Sound(MENU_MUSIC)
+            self.menu_in_sound = pg.mixer.Sound(MENU_IN_SOUND)
+            self.menu_out_sound = pg.mixer.Sound(MENU_OUT_SOUND)
+            self.switch_toggle_sound = pg.mixer.Sound(SWITCH_TOGGLE_SOUND)
+            self.high_score_sound = pg.mixer.Sound(HIGH_SCORE_SOUND)
+            self.game_over_music = pg.mixer.Sound(GAME_OVER_MUSIC)
+            self.level_start_sound = pg.mixer.Sound(LEVEL_START_SOUND)
 
-        # game sfx
-        self.door_switch_press_sound = pg.mixer.Sound(DOOR_SWITCH_PRESS_SOUND)
-        self.door_switch_fail_sound = pg.mixer.Sound(DOOR_SWITCH_FAIL_SOUND)
-        self.door_open_sound = pg.mixer.Sound(DOOR_OPEN_SOUND)
-        self.xp_pickup_sound = pg.mixer.Sound(XP_PICKUP_SOUND)
-        self.coin_pickup_sound = pg.mixer.Sound(COIN_PICKUP_SOUND)
-        self.health_pickup_sound = pg.mixer.Sound(HEALTH_PICKUP_SOUND)
-        self.key_pickup_sound = pg.mixer.Sound(KEY_PICKUP_SOUND)
-        self.lever_pull_sound = pg.mixer.Sound(LEVER_PULL_SOUND)
-        self.laser_sound = pg.mixer.Sound(LASER_SOUND)
-        self.laser_gun_sound = pg.mixer.Sound(LASER_GUN_SOUND)
-        self.burn_sound = pg.mixer.Sound(BURN_SOUND)
-        self.saw_sound = pg.mixer.Sound(SAW_SOUND)
-        self.explosion_sound = pg.mixer.Sound(EXPLOSION_SOUND)
+            # game sfx
+            self.door_switch_press_sound = pg.mixer.Sound(DOOR_SWITCH_PRESS_SOUND)
+            self.door_switch_fail_sound = pg.mixer.Sound(DOOR_SWITCH_FAIL_SOUND)
+            self.door_open_sound = pg.mixer.Sound(DOOR_OPEN_SOUND)
+            self.xp_pickup_sound = pg.mixer.Sound(XP_PICKUP_SOUND)
+            self.coin_pickup_sound = pg.mixer.Sound(COIN_PICKUP_SOUND)
+            self.health_pickup_sound = pg.mixer.Sound(HEALTH_PICKUP_SOUND)
+            self.key_pickup_sound = pg.mixer.Sound(KEY_PICKUP_SOUND)
+            self.lever_pull_sound = pg.mixer.Sound(LEVER_PULL_SOUND)
+            self.laser_sound = pg.mixer.Sound(LASER_SOUND)
+            self.laser_gun_sound = pg.mixer.Sound(LASER_GUN_SOUND)
+            self.burn_sound = pg.mixer.Sound(BURN_SOUND)
+            self.saw_sound = pg.mixer.Sound(SAW_SOUND)
+            self.explosion_sound = pg.mixer.Sound(EXPLOSION_SOUND)
 
-        # sprites sounds
-        self.player_jump_sound = pg.mixer.Sound(PLAYER_JUMP_SOUND)
-        self.player_hit_sound = pg.mixer.Sound(PLAYER_HIT_SOUND)
-        self.gun_sound = pg.mixer.Sound(GUN_SOUND)
-        self.zombie_hit_sound = pg.mixer.Sound(ZOMBIE_HIT_SOUND)
-        self.zombie_die_sound = pg.mixer.Sound(ZOMBIE_DIE_SOUND)
-        self.zombie_moan_sounds = [pg.mixer.Sound(sound) for sound in ZOMBIE_MOAN_SOUNDS]
+            # sprites sounds
+            self.player_jump_sound = pg.mixer.Sound(PLAYER_JUMP_SOUND)
+            self.player_hit_sound = pg.mixer.Sound(PLAYER_HIT_SOUND)
+            self.gun_sound = pg.mixer.Sound(GUN_SOUND)
+            self.zombie_hit_sound = pg.mixer.Sound(ZOMBIE_HIT_SOUND)
+            self.zombie_die_sound = pg.mixer.Sound(ZOMBIE_DIE_SOUND)
+            self.zombie_moan_sounds = [pg.mixer.Sound(sound) for sound in ZOMBIE_MOAN_SOUNDS]
 
-        # set volumes for sounds
-        self.__set_volumes()
+            # set volumes for sounds
+            self.__set_volumes()
+        except Exception as e:
+            print(f"Error loading sounds: {e}")
+            print("Game will continue but sounds may not work properly")
+            # Continue without sounds rather than crashing
 
     def __set_volumes(self) -> None:
         """

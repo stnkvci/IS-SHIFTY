@@ -35,7 +35,7 @@ Sounds:
 
 ### Prerequisites
 
-##### [Python 3.7.6](https://www.python.org/downloads/release/python-376/)
+##### [Python 3.11.13](https://www.python.org/downloads/)
 
 #### Python packages installation
 
