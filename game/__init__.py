@@ -34,14 +34,26 @@ class Game:
         Initialize the game and all game related data.
         """
 
-        # initialization
-        pg.mixer.pre_init(44100, -16, 2, 4096)
-        pg.init()
+        # initialization - improved settings for pygame 2.x
+        try:
+            pg.mixer.pre_init(44100, -16, 2, 512)  # Reduced buffer from 4096 to 512
+            pg.init()
+        except Exception as e:
+            print(f"Error initializing pygame: {e}")
+            raise
 
-        # display
+        # display - improved fullscreen handling for pygame 2.x on macOS
         self.__screen_size = (WIDTH, HEIGHT)
         self.display = pg.Surface(self.__screen_size)
-        self.window = pg.display.set_mode(self.__screen_size, pg.FULLSCREEN)
+
+        try:
+            # Use SCALED flag for better compatibility with pygame 2.x on macOS
+            self.window = pg.display.set_mode(self.__screen_size, pg.SCALED | pg.FULLSCREEN)
+        except Exception as e:
+            print(f"Warning: Fullscreen mode failed ({e}), falling back to windowed mode")
+            # Fallback to windowed mode if fullscreen fails
+            self.window = pg.display.set_mode(self.__screen_size)
+
         pg.display.set_caption(GAME_TITLE)
 
         # timer, clock...
@@ -88,9 +100,13 @@ class Game:
         self.__level_3_map = MAP3
 
         # sprite sheets
-        self.player_sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET, True)
-        self.zombies_sprite_sheet = SpriteSheet(ZOMBIE_SPRITE_SHEET, True)
-        self.explosion_sprite_sheet = SpriteSheet(EXPLOSION_SPRITE_SHEET)
+        try:
+            self.player_sprite_sheet = SpriteSheet(PLAYER_SPRITE_SHEET, True)
+            self.zombies_sprite_sheet = SpriteSheet(ZOMBIE_SPRITE_SHEET, True)
+            self.explosion_sprite_sheet = SpriteSheet(EXPLOSION_SPRITE_SHEET)
+        except Exception as e:
+            print(f"Error loading sprite sheets: {e}")
+            raise
 
         # dim screen image (pause menu)
         self.pause_dim_image = pg.Surface(self.__screen_size).convert_alpha()
@@ -100,8 +116,11 @@ class Game:
         self.default_font = pg.font.SysFont('Arial', 30)
 
         # load background music & set volume (plays if turned on in settings)
-        pg.mixer.music.load(BG_MUSIC)
-        pg.mixer.music.set_volume(0.5)
+        try:
+            pg.mixer.music.load(BG_MUSIC)
+            pg.mixer.music.set_volume(0.5)
+        except Exception as e:
+            print(f"Warning: Could not load background music: {e}")
 
     def run(self) -> None:
         """
